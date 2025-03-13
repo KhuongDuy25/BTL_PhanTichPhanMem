@@ -3,8 +3,9 @@
 <style>
     .job-description {
         display: -webkit-box;
-        -webkit-line-clamp: 3; /* Số dòng muốn giới hạn */
-        -webkit-box-orient: vertical;  
+        line-clamp: 3;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
         overflow: hidden;
         text-overflow: ellipsis;
     }
@@ -28,15 +29,15 @@
         <div class="row pb-5">
             <div class="col-md-8">
                 @if(session('success'))
-                    <div class="alert alert-success">
-                        {{ session('success') }}
-                    </div>
+                <div class="alert alert-success">
+                    {{ session('success') }}
+                </div>
                 @endif
 
                 @if(session('error'))
-                    <div class="alert alert-danger">
-                        {{ session('error') }}
-                    </div>
+                <div class="alert alert-danger">
+                    {{ session('error') }}
+                </div>
                 @endif
                 <div class="card shadow border-0">
                     <div class="job_details_header">
@@ -59,7 +60,23 @@
                             </div>
                             <div class="jobs_right">
                                 <div class="apply_now">
-                                    <a class="heart_mark" href="#"> <i class="fa fa-heart-o" aria-hidden="true"></i></a>
+                                    <!-- <a class="heart_mark" href="#"> <i class="fa fa-heart-o" aria-hidden="true"></i></a> -->
+                                    @if ($savedJob)
+                                    <form action="{{ route('deletejobsave', $savedJob->id) }}" method="GET" style="display: inline;">
+                                        @csrf
+                                        <button type="submit" class="btn btn-success">
+                                            <i class="fa fa-heart-o" aria-hidden="true"></i>
+                                        </button>
+                                    </form>
+                                    @else
+                                    <form action="{{ route('savedJob') }}" method="POST" style="display: inline;">
+                                        @csrf
+                                        <input type="hidden" name="id" value="{{ $job->id }}">
+                                        <button type="submit" class="btn btn-light">
+                                            <i class="fa fa-heart-o" aria-hidden="true"></i>
+                                        </button>
+                                    </form>
+                                    @endif
                                 </div>
                             </div>
                         </div>
@@ -79,16 +96,30 @@
                         </div>
                         <div class="border-bottom"></div>
                         <div class="pt-3 text-end">
+                            @if ($savedJob)
+                            <form action="{{ route('deletejobsave', $savedJob->id) }}" method="GET" style="display: inline;">
+                                @csrf
+                                <button type="submit" class="btn btn-outline-danger">Unsave</button>
+                            </form>
+                            @else
                             <form action="{{ route('savedJob') }}" method="POST" style="display: inline;">
                                 @csrf
                                 <input type="hidden" name="id" value="{{ $job->id }}">
-                                <button type="submit" class="btn btn-primary">Save</button>
+                                <button type="submit" class="btn btn-outline-primary">Save</button>
                             </form>
+                            @endif
+                            @if ($jobApplication)
+                            <form action="{{ route('deletejobapply', $jobApplication->id) }}" method="GET" style="display: inline;">
+                                @csrf
+                                <button type="submit" class="btn btn-danger">Unapply</button>
+                            </form>
+                            @else
                             <form action="{{ route('applyJob') }}" method="POST" style="display: inline;">
                                 @csrf
                                 <input type="hidden" name="id" value="{{ $job->id }}">
                                 <button type="submit" class="btn btn-primary">Apply</button>
                             </form>
+                            @endif
                         </div>
 
                     </div>
@@ -109,7 +140,7 @@
 
 
                                 @if (!empty($job->salary))
-                                    <li>Salary: <span>{{ $job->salary }}</span></li>
+                                <li>Salary: <span>{{ $job->salary }}</span></li>
                                 @endif
 
                                 <li>Location: <span>{{ $job->company_location }}</span></li>
@@ -128,13 +159,13 @@
                                 <li>Name: <span>{{ $job->company_name }}</span></li>
 
                                 @if (!empty($job->company_location))
-                                    <li>Locaion: <span>{{ $job->company_location }}</span></li>
+                                <li>Locaion: <span>{{ $job->company_location }}</span></li>
                                 @endif
 
                                 @if (!empty($job->company_website))
-                                    <li>Webite: <span><a
-                                                href="{{ $job->company_website }}">{{ $job->company_website }}</a></span>
-                                    </li>
+                                <li>Webite: <span><a
+                                            href="{{ $job->company_website }}">{{ $job->company_website }}</a></span>
+                                </li>
                                 @endif
 
                             </ul>

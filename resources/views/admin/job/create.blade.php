@@ -24,7 +24,9 @@
         <select name="category_id" id="category_id" class="form-control">
             <option value="">Select Category</option>
             @foreach($categories as $category)
-            <option value="{{ $category->id }}">{{ $category->name }}</option>
+            <option value="{{ $category->id }}"  {{ old('category_id') == $category->id ? 'selected' : '' }}>
+                {{ $category->name }}
+            </option>
             @endforeach
         </select>
         @error('category_id')
@@ -37,7 +39,9 @@
         <select name="job_type_id" id="job_type_id" class="form-control">
             <option value="">Select Job Type</option>
             @foreach($jobTypes as $jobType)
-            <option value="{{ $jobType->id }}">{{ $jobType->name }}</option>
+            <option value="{{ $jobType->id }}" {{ old('job_type_id') == $jobType->id ? 'selected' : '' }}>
+                {{ $jobType->name }}
+            </option>
             @endforeach
         </select>
         @error('job_type_id')
@@ -70,9 +74,14 @@
         <label for="experience">Experience require</label>
         <select name="experience" id="experience" class="form-control">
             <option value="">Select Experience</option>
-            @for ($i = 1; $i <= 10; $i++) <option value="{{ $i }}">{{ $i }} Year{{ $i > 1 ? 's' : '' }}</option>
-                @endfor
-                <option value="10+">10+ Years</option>
+            @for ($i = 1; $i <= 10; $i++)
+            <option value="{{ $i }}" {{ old('experience') == $i ? 'selected' : '' }}>
+                {{ $i }} Year{{ $i > 1 ? 's' : '' }}
+            </option>
+            @endfor
+            <option value="10+" {{ old('experience') == '10+' ? 'selected' : '' }}>
+                10+ Years
+            </option>
         </select>
         @error('experience')
         <div class="error-validate mt-3">{{ $message }}</div>

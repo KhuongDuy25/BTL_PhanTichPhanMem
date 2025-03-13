@@ -3,8 +3,8 @@
 <style>
 .job-description {
     display: -webkit-box;
+    line-clamp: 3;
     -webkit-line-clamp: 3;
-    /* Số dòng muốn giới hạn */
     -webkit-box-orient: vertical;
     overflow: hidden;
     text-overflow: ellipsis;

@@ -46,6 +46,9 @@
             <li class="list-group-item d-flex justify-content-between align-items-center p-3">
                 <a href="{{ route('admin.category.manage') }}">Manage Category</a>
             </li>
+            <li class="list-group-item d-flex justify-content-between align-items-center p-3">
+                <a href="{{ route('admin.jobType.manage') }}">Manage Job Type</a>
+            </li>
             @endif
             @endauth
             <li class="list-group-item d-flex justify-content-between align-items-center p-3">
